@@ -1,3 +1,4 @@
+import os
 from unipath import Path
 from decouple import config
 import dj_database_url
@@ -15,7 +16,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
-    'default': dj_database_url.config(default=config('DATABASE_URL'))
+    'default': dj_database_url.config(default=config('DJANGO_DB_URL'))
 }
 
 ALLOWED_HOSTS = ['*']
@@ -78,14 +79,14 @@ LOCALE_PATHS = (PROJECT_DIR.child('locale'), )
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_ROOT = PROJECT_DIR.parent.parent.child('staticfiles')
+STATIC_ROOT = os.path.join(os.environ['CLOUDWAY_DATA_DIR'], 'static')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     PROJECT_DIR.child('static'),
 )
 
-MEDIA_ROOT = PROJECT_DIR.parent.parent.child('media')
+MEDIA_ROOT = os.path.join(os.environ['CLOUDWAY_DATA_DIR'], 'media')
 MEDIA_URL = '/media/'
 
 TEMPLATE_DIRS = (
